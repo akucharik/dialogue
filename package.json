@@ -1,0 +1,23 @@
+{
+  "name": "dialogue",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": ["bubble", "dialogue", "game", "renderer", "speech", "text"],
+  "author": "",
+  "license": "ISC",
+  "main": "./dist/dialogue.js",
+  "module": "./esm/index.js",
+  "types": "./index.d.ts",
+  "scripts": {
+    "build": "npm run build:prod",
+    "build:docs": "npx webpack --config webpack.docs.config.js --mode production",
+    "build:dev": "npx webpack --mode development",
+    "build:prod": "npx webpack --mode production"
+  },
+  "devDependencies": {
+    "ts-loader": "^9.2.4",
+    "typescript": "^4.3.5",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
