@@ -1,10 +1,18 @@
 # Dialogue
 
-# What is this?
+A JavaScript library for rendering dialogue in HTML.
 
-This is a JavaScript library for rendering HTML dialogue.
+<p>
+  <img src="https://img.shields.io/github/v/release/akucharik/dialogue?include_prereleases&style=flat">
+
+  <img src="https://img.shields.io/github/package-json/v/akucharik/dialogue?style=flat">
+
+  <img src="https://img.shields.io/github/license/akucharik/dialogue?style=flat">
+</p>
 
 # How do I use it?
+
+TODO
 
 ## Building the repo
 
