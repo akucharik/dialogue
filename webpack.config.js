@@ -21,7 +21,7 @@ module.exports = {
     library: {
       name: 'dialogue',
       type: 'umd',
-    }
+    },
   },
   externals: {
     gsap: {

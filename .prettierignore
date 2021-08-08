@@ -1,0 +1,5 @@
+# Ignore artifacts:
+**/dist
+docs/scripts
+coverage
+tsconfig.json
