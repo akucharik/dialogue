@@ -1,4 +1,4 @@
 export interface IDialogueCssRenderer {
-    element: HTMLElement;
-    render: () => IDialogueCssRenderer;
+  element: HTMLElement;
+  render: () => IDialogueCssRenderer;
 }

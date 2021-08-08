@@ -1,7 +1,7 @@
 declare global {
   interface Window {
-      CustomEase: any;
-      gsap: any;
+    CustomEase: any;
+    gsap: any;
   }
 }
 

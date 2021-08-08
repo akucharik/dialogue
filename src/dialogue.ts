@@ -1,9 +1,9 @@
-import { DialogueParagraph } from "./dialogue-paragraph";
+import { DialogueParagraph } from './dialogue-paragraph';
 
 export class Dialogue {
-    paragraphs: Array<DialogueParagraph> = [];
+  paragraphs: Array<DialogueParagraph> = [];
 
-    constructor (paragraphs: Array<DialogueParagraph>) {
-        this.paragraphs = paragraphs;
-    }
+  constructor(paragraphs: Array<DialogueParagraph>) {
+    this.paragraphs = paragraphs;
+  }
 }
