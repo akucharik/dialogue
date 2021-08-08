@@ -1,8 +1,15 @@
 {
   "name": "dialogue",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
-  "keywords": ["bubble", "dialogue", "game", "renderer", "speech", "text"],
+  "keywords": [
+    "bubble",
+    "dialogue",
+    "game",
+    "renderer",
+    "speech",
+    "text"
+  ],
   "author": "",
   "license": "ISC",
   "main": "./dist/dialogue.js",
@@ -15,6 +22,7 @@
     "build:prod": "npx webpack --mode production"
   },
   "devDependencies": {
+    "prettier": "^2.3.2",
     "ts-loader": "^9.2.4",
     "typescript": "^4.3.5",
     "webpack": "^5.38.1",
