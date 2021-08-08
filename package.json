@@ -11,7 +11,7 @@
     "text"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "main": "./dist/dialogue.js",
   "module": "./esm/index.js",
   "types": "./index.d.ts",
