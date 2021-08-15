@@ -2,21 +2,30 @@ import {
   Dialogue,
   DialogueCssRenderer,
   DialogueParagraph,
-  DialogueWord,
+  DialogueText,
 } from '../../esm/index';
 
 (() => {
-  const word1: DialogueWord = new DialogueWord('Hi...', 50);
-  const word2: DialogueWord = new DialogueWord("I'm dialogue.", 50, 750);
-  const word3: DialogueWord = new DialogueWord(
-    "And I'm a second line.",
-    50,
-    1000
-  );
+  // Text
+  const textP1T1: DialogueText = new DialogueText('Hi...', { speed: 50 });
+  const textP1T2: DialogueText = new DialogueText("I'm dialogue.", {
+    delay: 750,
+    speed: 50,
+  });
 
-  const paragraph1: DialogueParagraph = new DialogueParagraph([word1, word2]);
-  const paragraph2: DialogueParagraph = new DialogueParagraph([word3]);
+  const textP2T1: DialogueText = new DialogueText("And I'm a second line.", {
+    delay: 750,
+    speed: 50,
+  });
 
+  // Paragraphs
+  const paragraph1: DialogueParagraph = new DialogueParagraph([
+    textP1T1,
+    textP1T2,
+  ]);
+  const paragraph2: DialogueParagraph = new DialogueParagraph([textP2T1]);
+
+  // Dialogue
   const dialogue: Dialogue = new Dialogue([paragraph1, paragraph2]);
 
   const dialogueElement: HTMLElement | null =
@@ -28,6 +37,6 @@ import {
       dialogueElement
     );
 
-    dialogueRenderer.render();
+    dialogueRenderer.render().play();
   }
 })();

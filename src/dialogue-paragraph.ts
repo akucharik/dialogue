@@ -1,4 +1,5 @@
 import { IDialogueEntity } from './dialogue-entity.interface';
+import { DialogueText } from './dialogue-text';
 import { DialogueWord } from './dialogue-word';
 
 export class DialogueParagraph implements IDialogueEntity {
@@ -6,12 +7,20 @@ export class DialogueParagraph implements IDialogueEntity {
 
   speed = 0;
 
+  text: Array<DialogueText> = [];
+
   words: Array<DialogueWord> = [];
 
-  constructor(words: Array<DialogueWord>, speed = 0, delay = 0) {
-    this.words = words;
+  constructor(text: Array<DialogueText>, speed = 0, delay = 0) {
+    this.text = text;
     this.speed = speed;
     this.delay = delay;
+    this.words = text.reduce(
+      (acc: Array<DialogueWord>, value: DialogueText) => {
+        return [...acc, ...value.words];
+      },
+      []
+    );
 
     // TODO: Delay for first word
     /*

@@ -1,23 +1,30 @@
 import { IDialogueEntity } from './dialogue-entity.interface';
 import { DialogueLetter } from './dialogue-letter';
+import {
+  defaultDialogueTextDelay,
+  defaultDialogueTextSpeed,
+  IDialogueTextOptions,
+} from './dialogue-text-options.interface';
 
 export class DialogueWord implements IDialogueEntity {
-  delay = 0;
-
-  speed = 0;
+  delay = defaultDialogueTextDelay;
 
   letters: Array<DialogueLetter> = [];
 
-  constructor(text: string, speed = 0, delay = 0) {
-    this.speed = speed;
-    this.delay = delay;
+  speed = defaultDialogueTextSpeed;
+
+  constructor(text: string, options: IDialogueTextOptions) {
+    Object.assign(this, options);
 
     const letters: Array<string> = Array.from(text);
     this.letters = letters.map((letter: string, index: number) => {
       if (index === 0) {
-        return new DialogueLetter(letter, speed, delay);
+        return new DialogueLetter(letter, {
+          delay: this.delay,
+          speed: this.speed,
+        });
       } else {
-        return new DialogueLetter(letter, speed);
+        return new DialogueLetter(letter, { speed: this.speed });
       }
     });
   }

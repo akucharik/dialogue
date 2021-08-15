@@ -17,9 +17,12 @@
   "types": "./index.d.ts",
   "scripts": {
     "build": "npm run build:prod",
-    "build:docs": "npx webpack --config webpack.docs.config.js --mode production",
+    "build:docs": "npm run build:prod && npx webpack --config webpack.docs.config.js --mode production",
     "build:dev": "npx webpack --mode development",
     "build:prod": "npx webpack --mode production"
+  },
+  "dependencies": {
+    "gsap": "^3.7.1"
   },
   "devDependencies": {
     "prettier": "^2.3.2",
