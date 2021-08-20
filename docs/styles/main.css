@@ -1,9 +1,13 @@
-.dia-dialogue__word {
-  opacity: 1;
+.dia-dialogue__dialogue {
+  white-space: pre-wrap;
 }
 
-.dia-dialogue__word--visible {
-  opacity: 1;
+.dia-dialogue__paragraph {
+  display: block;
+}
+
+.dia-dialogue__text {
+  display: inline-block;
 }
 
 .dia-dialogue__character {
@@ -17,6 +21,15 @@
 
 .dia-dialogue__character--space {
   display: inline;
+}
+
+.docs__paragraph {
+  margin: 16px 0;
+}
+
+.docs__hi {
+  color: cornflowerblue;
+  font-weight: 700;
 }
 
 @keyframes bounce {

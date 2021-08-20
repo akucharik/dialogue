@@ -1,38 +1,42 @@
 import { gsap } from 'gsap';
-import { DialogueLetter } from '../dialogue-letter';
+import { DialogueCharacter } from '../dialogue-character';
 import { IDialogueCssRenderer } from './dialogue-css-renderer.interface';
 import { msToSeconds } from '../utils/ms-to-seconds';
 
-export class DialogueLetterCssRenderer implements IDialogueCssRenderer {
+export class DialogueCharacterCssRenderer implements IDialogueCssRenderer {
   timeline: GSAPTimeline = gsap.timeline();
 
   element: HTMLElement;
 
-  letter: DialogueLetter;
+  character: DialogueCharacter;
 
-  constructor(letter: DialogueLetter) {
+  get isSpace(): boolean {
+    return this.character.text === ' ';
+  }
+
+  constructor(character: DialogueCharacter) {
     this.element = document.createElement('span');
-    this.letter = letter;
+    this.character = character;
     this.updateTimeline();
   }
 
-  render(): DialogueLetterCssRenderer {
+  render(): DialogueCharacterCssRenderer {
     this.element.classList.add('dia-dialogue__character');
 
-    if (this.letter.text === ' ') {
+    if (this.isSpace) {
       this.element.classList.add('dia-dialogue__character--space');
     }
 
-    this.element.appendChild(document.createTextNode(this.letter.text));
+    this.element.appendChild(document.createTextNode(this.character.text));
     return this;
   }
 
-  updateTimeline(): DialogueLetterCssRenderer {
+  updateTimeline(): DialogueCharacterCssRenderer {
     const timeline: GSAPTimeline = gsap.timeline();
 
     // Default animation
     timeline
-      .delay(msToSeconds(this.letter.speed))
+      .delay(!this.isSpace ? msToSeconds(this.character.speed) : 0)
       .set(this.element, { opacity: 1 });
 
     this.timeline = timeline;

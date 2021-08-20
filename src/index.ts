@@ -1,6 +1,6 @@
 import { Dialogue } from './dialogue';
 import { DialogueCssRenderer } from './css-renderer/dialogue-css-renderer';
 import { DialogueParagraph } from './dialogue-paragraph';
-import { DialogueWord } from './dialogue-word';
+import { DialogueText } from './dialogue-text';
 
-export { Dialogue, DialogueCssRenderer, DialogueParagraph, DialogueWord };
+export { Dialogue, DialogueCssRenderer, DialogueParagraph, DialogueText };

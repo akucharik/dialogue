@@ -1,26 +1,33 @@
 import { IDialogueEntity } from './dialogue-entity.interface';
+import { DialogueCharacter } from './dialogue-character';
 import {
   defaultDialogueTextDelay,
   defaultDialogueTextSpeed,
   IDialogueTextOptions,
 } from './dialogue-text-options.interface';
-import { DialogueWord } from './dialogue-word';
 
 export class DialogueText implements IDialogueEntity {
+  className = '';
+
   delay = defaultDialogueTextDelay;
 
   speed = defaultDialogueTextSpeed;
 
-  words: Array<DialogueWord> = [];
+  characters: Array<DialogueCharacter> = [];
 
   constructor(text: string, options: IDialogueTextOptions = {}) {
     Object.assign(this, options);
 
-    this.words = text.split(' ').map((word: string, index: number) => {
+    const characters: Array<string> = Array.from(text);
+
+    this.characters = characters.map((character: string, index: number) => {
       if (index === 0) {
-        return new DialogueWord(word, { delay: this.delay, speed: this.speed });
+        return new DialogueCharacter(character, {
+          delay: this.delay,
+          speed: this.speed,
+        });
       } else {
-        return new DialogueWord(word, { speed: this.speed });
+        return new DialogueCharacter(character, { speed: this.speed });
       }
     });
   }

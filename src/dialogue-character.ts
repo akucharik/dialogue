@@ -5,14 +5,14 @@ import {
   IDialogueTextOptions,
 } from './dialogue-text-options.interface';
 
-export class DialogueLetter implements IDialogueEntity {
+export class DialogueCharacter implements IDialogueEntity {
   delay = defaultDialogueTextDelay;
 
   speed = defaultDialogueTextSpeed;
 
   text = '';
 
-  constructor(text: string, options: IDialogueTextOptions) {
+  constructor(text: string, options: IDialogueTextOptions = {}) {
     Object.assign(this, options);
     this.text = text;
   }

@@ -7,7 +7,10 @@ import {
 
 (() => {
   // Text
-  const textP1T1: DialogueText = new DialogueText('Hi...', { speed: 50 });
+  const textP1T1: DialogueText = new DialogueText('Hi... ', {
+    className: 'docs__hi',
+    speed: 50,
+  });
   const textP1T2: DialogueText = new DialogueText("I'm dialogue.", {
     delay: 750,
     speed: 50,
@@ -19,10 +22,10 @@ import {
   });
 
   // Paragraphs
-  const paragraph1: DialogueParagraph = new DialogueParagraph([
-    textP1T1,
-    textP1T2,
-  ]);
+  const paragraph1: DialogueParagraph = new DialogueParagraph(
+    [textP1T1, textP1T2],
+    { className: 'docs__paragraph' }
+  );
   const paragraph2: DialogueParagraph = new DialogueParagraph([textP2T1]);
 
   // Dialogue
