@@ -1,17 +1,18 @@
 import { IDialogueEntity } from './dialogue-entity.interface';
 import { DialogueCharacter } from './dialogue-character';
-import {
-  defaultDialogueTextDelay,
-  defaultDialogueTextSpeed,
-  IDialogueTextOptions,
-} from './dialogue-text-options.interface';
+import { IDialogueTextOptions } from './dialogue-text-options.interface';
+import { defaultDialogueCharacterEffect } from './css-renderer/effect/character';
+import { DialogueCharacterEffect } from './css-renderer/effect/character/dialogue-character-effect.type';
 
 export class DialogueText implements IDialogueEntity {
+  // TODO: className should be part of the renderer options
   className = '';
 
-  delay = defaultDialogueTextDelay;
+  // TODO: delay should be part of the renderer effect options
+  delay = 0;
 
-  speed = defaultDialogueTextSpeed;
+  // TODO: characterEffect should be part of the renderer options
+  characterEffect: DialogueCharacterEffect = defaultDialogueCharacterEffect;
 
   characters: Array<DialogueCharacter> = [];
 
@@ -20,15 +21,10 @@ export class DialogueText implements IDialogueEntity {
 
     const characters: Array<string> = Array.from(text);
 
-    this.characters = characters.map((character: string, index: number) => {
-      if (index === 0) {
-        return new DialogueCharacter(character, {
-          delay: this.delay,
-          speed: this.speed,
-        });
-      } else {
-        return new DialogueCharacter(character, { speed: this.speed });
-      }
+    this.characters = characters.map((character: string) => {
+      return new DialogueCharacter(character, {
+        effect: this.characterEffect,
+      });
     });
   }
 }

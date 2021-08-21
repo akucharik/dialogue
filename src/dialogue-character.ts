@@ -1,18 +1,23 @@
-import { IDialogueEntity } from './dialogue-entity.interface';
-import {
-  defaultDialogueTextDelay,
-  defaultDialogueTextSpeed,
-  IDialogueTextOptions,
-} from './dialogue-text-options.interface';
+import { defaultDialogueCharacterEffect } from './css-renderer/effect/character';
+import { DialogueCharacterEffect } from './css-renderer/effect/character/dialogue-character-effect.type';
+import { IDialogueEntityOptions } from './dialogue-entity-options.interface';
 
-export class DialogueCharacter implements IDialogueEntity {
-  delay = defaultDialogueTextDelay;
+export interface IDialogueCharacterOptions extends IDialogueEntityOptions {
+  // TODO: delay should be part of the renderer options
+  effect?: DialogueCharacterEffect;
+}
 
-  speed = defaultDialogueTextSpeed;
+export class DialogueCharacter {
+  // TODO: delay should be part of the renderer options
+  effect: DialogueCharacterEffect = defaultDialogueCharacterEffect;
+
+  get isSpace(): boolean {
+    return this.text === ' ';
+  }
 
   text = '';
 
-  constructor(text: string, options: IDialogueTextOptions = {}) {
+  constructor(text: string, options: IDialogueCharacterOptions = {}) {
     Object.assign(this, options);
     this.text = text;
   }

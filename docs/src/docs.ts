@@ -1,24 +1,24 @@
+import { Dialogue, DialogueParagraph, DialogueText } from '../../esm/dialogue';
 import {
-  Dialogue,
-  DialogueCssRenderer,
-  DialogueParagraph,
-  DialogueText,
-} from '../../esm/index';
+  createTypewriterBounceCharacterEffect,
+  createTypewriterCharacterEffect,
+} from '../../esm/dialog-character-effect';
+import { DialogueCssRenderer } from '../../esm/dialogue-css-renderer';
 
 (() => {
   // Text
   const textP1T1: DialogueText = new DialogueText('Hi... ', {
     className: 'docs__hi',
-    speed: 50,
+    characterEffect: createTypewriterCharacterEffect(),
   });
   const textP1T2: DialogueText = new DialogueText("I'm dialogue.", {
     delay: 750,
-    speed: 50,
+    characterEffect: createTypewriterBounceCharacterEffect(),
   });
 
   const textP2T1: DialogueText = new DialogueText("And I'm a second line.", {
     delay: 750,
-    speed: 50,
+    characterEffect: createTypewriterCharacterEffect(),
   });
 
   // Paragraphs
