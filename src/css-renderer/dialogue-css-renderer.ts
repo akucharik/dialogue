@@ -6,36 +6,47 @@ declare global {
 }
 
 import { gsap } from 'gsap';
-import { Dialogue } from '../dialogue';
-import { IDialogueCssRenderer } from './dialogue-css-renderer.interface';
+import {
+  IDialogueGroupCssRenderer,
+  IDialogueCssRendererOptionsBase,
+} from './dialogue-css-renderer.interface';
 import { DialogueParagraphCssRenderer } from './dialogue-paragraph-css-renderer';
 
-export class DialogueCssRenderer implements IDialogueCssRenderer {
-  timeline: GSAPTimeline = gsap.timeline({ paused: true });
+export class DialogueCssRenderer implements IDialogueGroupCssRenderer {
+  animation: GSAPTimeline = gsap.timeline({ paused: true });
 
-  dialogue: Dialogue;
+  className = '';
+
+  // TODO: Put delay into dialogue effects
+  delay = 0;
 
   element: HTMLElement;
 
   paragraphRenderers: Array<DialogueParagraphCssRenderer> = [];
 
-  constructor(dialogue: Dialogue, element: HTMLElement) {
-    this.dialogue = dialogue;
+  constructor(
+    paragraphRenderers: Array<DialogueParagraphCssRenderer>,
+    element: HTMLElement,
+    options?: IDialogueCssRendererOptionsBase
+  ) {
+    Object.assign(this, options);
     this.element = element;
-    this.paragraphRenderers = dialogue.paragraphs.map(
-      (paragraph) => new DialogueParagraphCssRenderer(paragraph)
-    );
-    this.updateTimeline();
+    this.paragraphRenderers = paragraphRenderers;
+    this.updateAnimation();
   }
 
   play(): DialogueCssRenderer {
-    this.timeline.play();
+    this.animation.play();
 
     return this;
   }
 
   render(): DialogueCssRenderer {
     this.element.classList.add('dia-dialogue__dialogue');
+
+    if (this.className) {
+      this.element.classList.add(this.className);
+    }
 
     this.paragraphRenderers.forEach((paragraphRenderer) => {
       this.element.appendChild(paragraphRenderer.render().element);
@@ -44,15 +55,14 @@ export class DialogueCssRenderer implements IDialogueCssRenderer {
     return this;
   }
 
-  updateTimeline(): DialogueCssRenderer {
-    const timeline: GSAPTimeline = gsap.timeline();
+  updateAnimation(): DialogueCssRenderer {
+    const timeline: GSAPTimeline = gsap.timeline({ paused: true });
 
-    // Default animation
     this.paragraphRenderers.forEach((paragraphRenderer) => {
-      timeline.add(paragraphRenderer.timeline);
+      timeline.add(paragraphRenderer.animation);
     });
 
-    this.timeline = timeline;
+    this.animation = timeline;
 
     return this;
   }

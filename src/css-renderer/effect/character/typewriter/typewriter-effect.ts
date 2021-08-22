@@ -1,13 +1,12 @@
 import { gsap } from 'gsap';
 import { DialogueCharacterCssRenderer } from '../../../dialogue-character-css-renderer';
-import { DialogueCharacter } from '../../../../dialogue-character';
-import { msToSeconds } from '../../../../utils/ms-to-seconds';
+import { msToSeconds } from '../../utils/ms-to-seconds';
 import { zeroDuration } from '../../constants';
 import {
   DialogueCharacterEffect,
   DialogueCharacterEffectCreator,
 } from '../dialogue-character-effect.type';
-import { IDialogueCharacterEffectOptions } from '../models/dialogue-character-effect.interface';
+import { IDialogueCharacterEffectOptions } from '../dialogue-character-effect.interface';
 
 interface ITypewriterConfig {
   animateSpaces: boolean;
@@ -26,10 +25,7 @@ export const createTypewriterCharacterEffect: DialogueCharacterEffectCreator<ITy
   (
     options?: ITypewriterCharacterEffectOptions
   ): DialogueCharacterEffect<ITypewriterCharacterEffectOptions> => {
-    return (
-      character: DialogueCharacter,
-      renderer: DialogueCharacterCssRenderer
-    ): GSAPTimeline => {
+    return (renderer: DialogueCharacterCssRenderer): GSAPTimeline => {
       const config: ITypewriterConfig = {
         ...defaultConfig,
         ...options,
@@ -37,10 +33,12 @@ export const createTypewriterCharacterEffect: DialogueCharacterEffectCreator<ITy
 
       const timeline: GSAPTimeline = gsap.timeline();
 
-      if (!config.animateSpaces) {
-        timeline.delay(character.isSpace ? 0 : msToSeconds(config.speed));
-      } else {
+      if (config.animateSpaces) {
         timeline.delay(msToSeconds(config.speed));
+      } else {
+        timeline.delay(
+          renderer.character.isSpace ? 0 : msToSeconds(config.speed)
+        );
       }
 
       timeline.fromTo(

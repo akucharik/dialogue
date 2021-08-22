@@ -1,33 +1,37 @@
 import { gsap } from 'gsap';
-import { DialogueParagraph } from '../dialogue-paragraph';
-import { IDialogueCssRenderer } from './dialogue-css-renderer.interface';
+import {
+  IDialogueGroupCssRenderer,
+  IDialogueParagraphCssRendererOptions,
+} from './dialogue-css-renderer.interface';
 import { DialogueTextCssRenderer } from './dialogue-text-css-renderer';
 
-export class DialogueParagraphCssRenderer implements IDialogueCssRenderer {
-  timeline: GSAPTimeline = gsap.timeline();
+export class DialogueParagraphCssRenderer implements IDialogueGroupCssRenderer {
+  animation: GSAPTimeline = gsap.timeline();
+
+  className = '';
+
+  // TODO: Put delay into paragraph effects
+  delay = 0;
 
   element: HTMLElement;
 
-  paragraph: DialogueParagraph;
-
   textRenderers: Array<DialogueTextCssRenderer> = [];
 
-  constructor(paragraph: DialogueParagraph) {
+  constructor(
+    textRenderers: Array<DialogueTextCssRenderer>,
+    options?: IDialogueParagraphCssRendererOptions
+  ) {
+    Object.assign(this, options);
     this.element = document.createElement('p');
-    this.paragraph = paragraph;
-
-    this.textRenderers = paragraph.text.map(
-      (text) => new DialogueTextCssRenderer(text)
-    );
-
-    this.updateTimeline();
+    this.textRenderers = textRenderers;
+    this.updateAnimation();
   }
 
   render(): DialogueParagraphCssRenderer {
     this.element.classList.add('dia-dialogue__paragraph');
 
-    if (this.paragraph.className) {
-      this.element.classList.add(this.paragraph.className);
+    if (this.className) {
+      this.element.classList.add(this.className);
     }
 
     this.textRenderers.forEach((textRenderer) => {
@@ -37,15 +41,14 @@ export class DialogueParagraphCssRenderer implements IDialogueCssRenderer {
     return this;
   }
 
-  updateTimeline(): DialogueParagraphCssRenderer {
+  updateAnimation(): DialogueParagraphCssRenderer {
     const timeline: GSAPTimeline = gsap.timeline();
 
-    // Default animation
     this.textRenderers.forEach((textRenderer) => {
-      timeline.add(textRenderer.timeline);
+      timeline.add(textRenderer.animation);
     });
 
-    this.timeline = timeline;
+    this.animation = timeline;
 
     return this;
   }

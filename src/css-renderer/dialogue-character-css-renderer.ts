@@ -2,24 +2,25 @@ import { gsap } from 'gsap';
 import { DialogueCharacter } from '../dialogue-character';
 import { IDialogueCssRenderer } from './dialogue-css-renderer.interface';
 import { DialogueCharacterEffect } from './effect/character/dialogue-character-effect.type';
-import { defaultDialogueCharacterEffect } from './effect/character';
-import { IDialogueCharacterEffectOptions } from './effect/character/models/dialogue-character-effect.interface';
+import { IDialogueCharacterEffectOptions } from './effect/character/dialogue-character-effect.interface';
 
 export class DialogueCharacterCssRenderer implements IDialogueCssRenderer {
+  animation: GSAPTimeline = gsap.timeline();
+
   character: DialogueCharacter;
 
-  effect: DialogueCharacterEffect<IDialogueCharacterEffectOptions> =
-    defaultDialogueCharacterEffect;
+  effect?: DialogueCharacterEffect<IDialogueCharacterEffectOptions>;
 
   element: HTMLElement;
 
-  timeline: GSAPTimeline = gsap.timeline();
-
-  constructor(character: DialogueCharacter) {
+  constructor(
+    character: DialogueCharacter,
+    effect?: DialogueCharacterEffect<IDialogueCharacterEffectOptions>
+  ) {
     this.character = character;
-    this.effect = character.effect;
+    this.effect = effect;
     this.element = document.createElement('span');
-    this.updateTimeline();
+    this.updateAnimation();
   }
 
   render(): DialogueCharacterCssRenderer {
@@ -33,8 +34,10 @@ export class DialogueCharacterCssRenderer implements IDialogueCssRenderer {
     return this;
   }
 
-  updateTimeline(): DialogueCharacterCssRenderer {
-    this.timeline = this.effect(this.character, this);
+  updateAnimation(): DialogueCharacterCssRenderer {
+    if (this.effect) {
+      this.animation = this.effect(this);
+    }
 
     return this;
   }
