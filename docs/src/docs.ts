@@ -8,23 +8,22 @@ import {
   DialogueParagraphCssRenderer,
   DialogueTextCssRenderer,
 } from '../../esm/dialogue-css-renderer';
+import {
+  createDialogueTextBounceEffect,
+  createDialogueTextFadeInEffect,
+} from '../../src/css-renderer/effect/text';
 
 (() => {
-  // Text
-  const textP1T1: DialogueText = new DialogueText('Hi... ');
-  const textP1T2: DialogueText = new DialogueText("I'm dialogue.");
-  const textP2T1: DialogueText = new DialogueText("And I'm a second line.");
-
   // Text Renderers
   const textP1T1Renderer: DialogueTextCssRenderer = new DialogueTextCssRenderer(
-    textP1T1,
+    new DialogueText('Hi... '),
     {
       className: 'docs__hi',
     }
   );
 
   const textP1T2Renderer: DialogueTextCssRenderer = new DialogueTextCssRenderer(
-    textP1T2,
+    new DialogueText("I'm dialogue."),
     {
       delay: 750,
       characterEffect: createTypewriterCharacterEffect(),
@@ -32,10 +31,29 @@ import {
   );
 
   const textP2T1Renderer: DialogueTextCssRenderer = new DialogueTextCssRenderer(
-    textP2T1,
+    new DialogueText("And I'm... "),
     {
       delay: 750,
       characterEffect: createTypewriterBounceCharacterEffect(),
+    }
+  );
+
+  const textP2T2Renderer: DialogueTextCssRenderer = new DialogueTextCssRenderer(
+    new DialogueText('a second '),
+    {
+      delay: 750,
+      effect: createDialogueTextFadeInEffect({
+        duration: 1500,
+      }),
+      characterEffect: createTypewriterBounceCharacterEffect(),
+    }
+  );
+
+  const textP2T3Renderer: DialogueTextCssRenderer = new DialogueTextCssRenderer(
+    new DialogueText('line.'),
+    {
+      delay: 750,
+      effect: createDialogueTextBounceEffect(),
     }
   );
 
@@ -46,9 +64,12 @@ import {
     });
 
   const textP2Renderer: DialogueParagraphCssRenderer =
-    new DialogueParagraphCssRenderer([textP2T1Renderer], {
-      className: 'docs__paragraph',
-    });
+    new DialogueParagraphCssRenderer(
+      [textP2T1Renderer, textP2T2Renderer, textP2T3Renderer],
+      {
+        className: 'docs__paragraph',
+      }
+    );
 
   // Dialogue Renderer
   const dialogueElement: HTMLElement | null =

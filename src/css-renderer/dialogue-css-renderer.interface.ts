@@ -1,4 +1,5 @@
 import { DialogueCharacterEffect } from './effect/character/dialogue-character-effect.type';
+import { DialogueTextEffect } from './effect/text/dialogue-text-effect.type';
 
 export interface IDialogueCssRenderer {
   animation: GSAPTimeline;
@@ -33,7 +34,6 @@ export interface IDialogueParagraphCssRendererOptions
 
 export interface IDialogueTextCssRendererOptions
   extends IDialogueCssRendererOptionsBase {
-  // TODO: Add DialogueTextEffect
-  //effect?: DialogueTextEffect;
+  effect?: DialogueTextEffect;
   characterEffect?: DialogueCharacterEffect;
 }

@@ -7,6 +7,7 @@ import {
 import { msToSeconds } from './effect/utils/ms-to-seconds';
 import { DialogueText } from '../dialogue-text';
 import { DialogueCharacterEffect } from './effect/character/dialogue-character-effect.type';
+import { DialogueTextEffect } from './effect/text/dialogue-text-effect.type';
 
 export class DialogueTextCssRenderer implements IDialogueGroupCssRenderer {
   animation: GSAPTimeline = gsap.timeline();
@@ -17,6 +18,8 @@ export class DialogueTextCssRenderer implements IDialogueGroupCssRenderer {
   delay = 0;
 
   element: HTMLElement;
+
+  effect?: DialogueTextEffect;
 
   characterEffect?: DialogueCharacterEffect;
 
@@ -52,12 +55,24 @@ export class DialogueTextCssRenderer implements IDialogueGroupCssRenderer {
   updateAnimation(): DialogueTextCssRenderer {
     const timeline: GSAPTimeline = gsap.timeline();
 
+    // Set up delay
     timeline.delay(msToSeconds(this.delay));
 
+    // Set up text animation
+    if (this.effect) {
+      timeline.add(this.effect(this));
+    }
+
+    // Set up character animation
+    const characterTimeline: GSAPTimeline = gsap.timeline();
+
     this.characterRenderers.forEach((characterRenderer) => {
-      timeline.add(characterRenderer.animation);
+      characterTimeline.add(characterRenderer.animation);
     });
 
+    timeline.add(characterTimeline, 0);
+
+    // Update animation
     this.animation = timeline;
 
     return this;
